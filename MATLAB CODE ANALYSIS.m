@@ -1,18 +1,16 @@
-% Clear all stored variables, clear command screen, set output format to 
-% short (i.e., 5 digit format), and close all figures
+
 clearvars
 clc
 format short 
 close all 
  
-%% LOAD DATA FILES FOR 3 POSITIONS
+%% 
 
 pos_1_data = readmatrix('VSKN_Position1.xlsx','Range','B1:D21');
 pos_2_data = readmatrix('VSKN_Position2.xlsx','Range','B1:D21');
 pos_3_data = readmatrix('VSKN_Position3.xlsx','Range','B1:D21');
 % ----------------------------------------------------------------------- % 
- 
-%% ESTABLISH ORTHONORMAL COORDINATE SYSTEM FOR FEMUR MARKER SET
+
 
 % Load initial coordinate positions of markers
 % position 1
@@ -73,12 +71,6 @@ e_fmz3 = (vec_z3/norm(vec_z3)) %medial direction
  
 % ----------------------------------------------------------------------- %
  
-%% ESTABLISH ORTHONORMAL COORDINATE SYSTEM FOR TIBIA MARKER SET
-% tmt, digitized tibia top - refers to the divot at the top of the L piece
-% tmb, digitized tibia bottom - refers to the middle divot on the L piece
-% tmf, digitized tibia front - refers to the divot on the L piece closest
-%                              to the joint
- 
 % Load initial coordinate positions of markers
 % postion 1
 tmt = pos_1_data(4,:); 
@@ -94,8 +86,6 @@ tmf2 = pos_2_data(6,:);
 tmt3 = pos_3_data(4,:); 
 tmb3 = pos_3_data(5,:);   
 tmf3 = pos_3_data(6,:);
- 
-% Establish an orthonormal coordinate system for the tibia market set.
  
 % e_tmx,y,z: base vectors derived from tibia marker set
 % postion 1
@@ -132,12 +122,6 @@ e_tmx3 = (vec_x23/norm(vec_x23))
 e_tmz3 = vec_z23/norm(vec_z23)
 % ----------------------------------------------------------------------- % 
  
-%% ESTABLISH ORTHONORMAL COORDINATE SYSTEM FOR MOUNTING FRAME CORNERS
-% ftc, digitized mounting frame top - divot on upper back corner, near
-%                                     femur
-% fbc, digitized mounting frame bottom - divot on lower back corner
-% ffc, digitized mounting frame front - divot on lower front corner
- 
 % Load initial coordinate positions of markers
 % position 1
 ftc = pos_1_data(7,:); 
@@ -153,10 +137,6 @@ ffc2 = pos_2_data(9,:);
 ftc3 = pos_3_data(7,:); 
 fbc3 = pos_3_data(8,:);   
 ffc3 = pos_3_data(9,:);
- 
-
-% Establish an orthonormal coordinate system for the mounting framer 
-% corners.
  
 % e_mfx,y,z: base vectors derived from mounting frame corners
 % position 1
@@ -194,27 +174,6 @@ e_mfy3 = vec_y33/norm(vec_y33)
 e_mfx3 = vec_x33/norm(vec_x33)
 e_mfz3 = vec_z33/norm(vec_z33)
  
-% ----------------------------------------------------------------------- % 
- 
-%% ESTABLISH EMBEDDED ORTHONORMAL COORDINATE SYSTEM FOR DISTAL FEMUR
-% efdm, embedded femur distal medial - divot on medial side of distal femur 
-%                                      (side with market sets)
-% efdl, embedded femur distal lateral - divot on lateral side of distal
-%                                       femur (nearest mounting frame)
-% efdp, embedded femor distal posterior - divot on posterior (top) side of 
-%                                         distal femur
-% efda, embedded femor dital anterior - divot on anterior (bottom) side of 
-%                                       distal femur
-% efpp, embedded femur proximal posterior - divot on posterior (top) side 
-%                                           of proximal femor
-% efpa, embedded femur proximal anterior - divot on anterior (bottom) side 
-%                                          of proximal femor
-% efdml, embedded femur distal medial-lateral mid-point - location of point
-%                                         between medial and lateral divots
-%                                         within the distal femur
- 
-% Load initial coordinate positions of markers
- 
 % position 1
 efdm = pos_1_data(10,:); % medial (x direction)
 efdl = pos_1_data(11,:); % lateral (x direction)
@@ -251,10 +210,6 @@ efpa3 = pos_3_data(15,:);
 e_femur_distal3 = mean([efdp3;efda3])
  
 e_femur_proximal3 = mean([efpp3;efpa3])
- 
-% Establish an orthonormal coordinate system embedded in the femur. Note 
-% that the origin should be inside the part and understand the correct 
-% orientation of the axes (see Figure 3 in lab introduction).
  
 % e_efx,y,z: embedded base vectors from distal femur
  
@@ -300,22 +255,6 @@ e_efz3 = vec_z43/norm(vec_z43)
  
  
 % ----------------------------------------------------------------------- % 
- 
-%% ESTABLISH EMBEDDED ORTHONORMAL COORDINATE SYSTEM FOR PROXIMAL TIBIA
-% etpm, embedded tibia proximal medial - divot on medial side of proximal
-%                                        stibia (side with market sets)
-% etpl, embedded tibia proximal lateral - divot on lateral side of 
-%                                         proximal tibia (nearest 
-%                                         mounting frame)
-% etpp, embedded tibia proximal posterior - divot on posterior (top) side 
-%                                           of proximal femur
-% etpa, embedded tibia proximal anterior - divot on anterior (bottom) side 
-%                                          of proximal femur
-% etdp, embedded tibia distal posterior - divot on posterior (top) side 
-%                                         of distal femur
-% etda, embedded tibia distal anterior - divot on anterior (bottom) side 
-%                                        of distal femur
- 
 % Load initial coordinate positions of markers
 %position 1
 etpm = pos_1_data(16,:); % x direction
@@ -353,10 +292,6 @@ etda3 = pos_3_data(21,:); % z direction
 e_tibia_proximal3 = mean([etpp3;etpa3]);
  
 e_tibia_distal3 = mean([etdp3;etda3]);
- 
-% Establish an orthonormal coordinate system embedded in the tibia. Note 
-% that the origin should be inside the part and understand the correct 
-% orientation of the axes (see Figure 4 in lab introduction).
  
 % e_etx,y,z: embedded base vectors for proximal tibia
  
@@ -403,14 +338,7 @@ e_etx3 = vec_x43/norm(vec_x43)
 e_ety3 = vec_y43/norm(vec_y43)
 e_etz3 = vec_z43/norm(vec_z43)
 % ----------------------------------------------------------------------- % 
- 
-%% PLOT MARKER SETS AND DEFINED COORDINATE SYSTEMS
-% check the figure to ensure the calculated coordinate systems axes are 
-% correct (compare with Figs. 3-5 in lab introduction)
- 
-% ** check that variable names are correct **
- 
- 
+  
 cs_data = [fmb e_fmx e_fmy e_fmz;
            tmb e_tmx e_tmy e_tmz;
            fbc e_mfx e_mfy e_mfz;
@@ -435,21 +363,6 @@ cs_data3 = [fmb3 e_fmx3 e_fmy3 e_fmz3;
   
 [~] = plot_markers_CS_2021(pos_3_data,cs_data3,3);
  
-%% DETERMINE 4x4 TRANSFORMATION MATRICES
-%
-%  Use transform_matrix.m function
-%     input 1-3: orthonormal axes (e1, e2, e3) that define c.s.
-%     transforming from (unprimed c.s.)
-%     input 4-6: orthonormal axes (e1, e2, e3) that define c.s.
-%     transforming to (primed c.s.)
-%     input 7: x,y,z coordinates of c.s. origin transforming from
-%     input 8: x,y,z coordiantes of c.s. origin transforming to
- 
-%% DETERMINE 4x4 TRANSFORMATION MATRIX BETWEEN FEMUR EMBEDDED C.S. and 
-%  MARKET SET C.S.
-%
-%  (Data Analysis Q1)
- 
 T_fe_fm = transform_matrix(e_efx,e_efy,e_efz,e_fmx,e_fmy,e_fmz,e_femur_distal,fmb)
  
 T_fe_fm2 = transform_matrix(e_efx2,e_efy2,e_efz2,e_fmx2,e_fmy2,e_fmz2,e_femur_distal2,fmb2)
@@ -457,26 +370,13 @@ T_fe_fm2 = transform_matrix(e_efx2,e_efy2,e_efz2,e_fmx2,e_fmy2,e_fmz2,e_femur_di
 T_fe_fm3 = transform_matrix(e_efx3,e_efy3,e_efz3,e_fmx3,e_fmy3,e_fmz3,e_femur_distal3,fmb3)
 % ----------------------------------------------------------------------- % 
  
-%% DETERMINE 4x4 TRANSFORMATION MATRIX BETWEEN THE TIBIA MARKER SET C.S. 
-%  AND EMBEDDED C.S.
-%
-%  (Data Analysis Q2)
- 
 T_tm_te = transform_matrix(e_tmx, e_tmy, e_tmz, e_etx, e_ety, e_etz,tmb, e_tibia_proximal)
  
 T_tm_te2 = transform_matrix(e_tmx2, e_tmy2, e_tmz2, e_etx2, e_ety2, e_etz2,tmb2, e_tibia_proximal2)
  
 T_tm_te3 = transform_matrix(e_tmx3, e_tmy3, e_tmz3, e_etx3, e_ety3, e_etz3,tmb3, e_tibia_proximal3)
  
-% ----------------------------------------------------------------------- % 
- 
-%% DETERMINE 4X4 TRANSFORMATION MATRIX BETWEEN FEMUR MARKER SET C.S. AND
-%  TIBIA MARKER SET C.S.
-%  (Data Analysis Q3)
- 
-%  ** Must be calculated for all 3 positions of the kinematic knee **
- 
-% Position 1: ~5 degrees of flexion and 0 degrees of tibial rotation
+% ----------------------------------------------------------------------- %
  
 T_fm_tm_1 = transform_matrix(e_fmx,e_fmy,e_fmz,e_tmx,e_tmy,e_tmz,fmb,tmb)
  
@@ -493,10 +393,6 @@ T_fm_tm_2 = transform_matrix(e_fmx2,e_fmy2,e_fmz2,e_tmx2,e_tmy2,e_tmz2,fmb2,tmb2
 T_fm_tm_3 = transform_matrix(e_fmx3,e_fmy3,e_fmz3,e_tmx3,e_tmy3,e_tmz3,fmb3,tmb3)
  
 % ----------------------------------------------------------------------- % 
- 
-%% DETERMINE THE OVERALL 4x4 TRANSFORMATION MATRIX BETWEEN THE FEMUR 
-%  EMBEDDED C.S. AND TIBIA EMBEDDED C.S.
-%  (Data Analysis Q4)
 
 T_fe_te_1 = T_tm_te*T_fm_tm_1*T_fe_fm
 T_fe_te_2 = T_tm_te*T_fm_tm_2*T_fe_fm
@@ -504,19 +400,6 @@ T_fe_te_3 = T_tm_te*T_fm_tm_3*T_fe_fm
  
 % ----------------------------------------------------------------------- % 
  
-%% DETERMINE EULER ANGLES ASSOCIATED WITH MOTION ON THE FEMUR TO TIBIA 
-%  EMBEDDED C.S. (i.e., T_fe_te) FOR ALL 3 POSITIONS
-%
-% naming convention; angles should be calculated in degrees
-% psi - CCW rotation about x-axis
-% theta - CCW rotation about y-axis
-% phi - CCW rotation about z-axis
-% see lecture slides when discussing Euler Angles
-%
-% It is encouraged to calculate the angles in radians and then covert to
-% degrees
-%
-
 % Position 1:
 T1=T_fe_te_1;
 theta1=asin(T1(3,1));
@@ -558,10 +441,6 @@ phi3 = rad2deg(phi3)
  
  
 % ----------------------------------------------------------------------- %
- 
-%% CREATE PLOTS FOR CHANGES IN EULER ANGLES ACROSS POSITIONS
-% See plotting guidelines in Report Guide document
- 
  
 figure
 position = [1 2 3];
